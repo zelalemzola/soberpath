@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -26,7 +24,7 @@ export function QuizStep14({ onNext, updateData }: QuizStep16Props) {
           </h1>
 
           <p className="text-lg text-gray-700 max-w-md mx-auto">
-            Ultiself uses AI to determine these triggers & attacks it at its
+            Soberpath uses AI to determine these triggers & attacks it at its
             core
           </p>
 

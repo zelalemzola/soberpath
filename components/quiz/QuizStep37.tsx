@@ -29,7 +29,7 @@ export default function QuizStep37({ onNext, onBack }: QuizStep37Props) {
           <div className="bg-white rounded-lg shadow-lg p-6 max-w-md mx-auto">
             <Image
               src="/good-news-graph.png"
-              alt="Progress chart showing improvement over 4 weeks from Today to After using Ultiself"
+              alt="Progress chart showing improvement over 4 weeks from Today to After using Soberpath"
               width={400}
               height={250}
               className="w-full h-auto"
@@ -257,7 +257,6 @@ export default function QuizStep37({ onNext, onBack }: QuizStep37Props) {
       </div>
 
       {/* Footer */}
-    
     </div>
   );
 }

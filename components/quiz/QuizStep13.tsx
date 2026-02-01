@@ -60,7 +60,7 @@ export function QuizStep13({ onNext, updateData }: QuizStep17Props) {
         <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
           <span className="text-white font-bold text-sm">U</span>
         </div>
-        <span className="text-sm font-medium text-gray-700">Ultiself</span>
+        <span className="text-sm font-medium text-gray-700">Soberpath</span>
         <div className="flex space-x-4 ml-8">
           <a href="#" className="text-xs text-gray-500 hover:text-gray-700">
             Privacy Policy

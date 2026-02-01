@@ -13,7 +13,7 @@ export default function QuizStep33({ onNext, onBack }: QuizStep32Props) {
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
       <div className="max-w-2xl w-full text-center space-y-8">
         <h1 className="text-2xl md:text-3xl font-bold text-gray-800">
-          Ultiself is the ONLY tool you need to build discipline &
+          Soberpath is the ONLY tool you need to build discipline &
           <em>Take control of your drinking</em>
         </h1>
 
@@ -47,12 +47,12 @@ export default function QuizStep33({ onNext, onBack }: QuizStep32Props) {
           </div>
         </div>
       </div>
-       <Button
-            onClick={onNext}
-            className="w-full max-w-md bg-green-500 hover:bg-green-600 text-white py-3 text-lg rounded-lg"
-          >
-            Continue
-          </Button>
+      <Button
+        onClick={onNext}
+        className="w-full max-w-md bg-green-500 hover:bg-green-600 text-white py-3 text-lg rounded-lg"
+      >
+        Continue
+      </Button>
     </div>
   );
 }

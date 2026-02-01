@@ -41,7 +41,7 @@ export function QuizStep5({ onNext, updateData }: QuizStep6Props) {
             <div className="text-2xl mb-2">💰</div>
             <p className="text-green-800 font-medium text-sm">
               <span className="italic font-semibold">
-                Ultiself is recommended
+                Soberpath is recommended
               </span>{" "}
               by a<br />
               growing number of psychologists

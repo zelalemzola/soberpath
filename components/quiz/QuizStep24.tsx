@@ -1,5 +1,3 @@
-
-
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -31,8 +29,8 @@ export default function QuizStep24({ onNext, onBack }: QuizStep25Props) {
         <div className="space-y-4">
           <p className="text-lg text-gray-700">
             <strong>
-              Ultiself uses cutting edge training &
-              neuroscience exercises, right in our app, to
+              Soberpath uses cutting edge training & neuroscience exercises,
+              right in our app, to
               <br />
               empower you.
             </strong>
