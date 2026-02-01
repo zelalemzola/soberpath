@@ -1,7 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-
+import {motion} from 'framer-motion'
 interface QuizStep21Props {
   onNext: () => void;
   onBack: () => void;
@@ -70,12 +70,19 @@ export default function QuizStep28({ onNext, onBack }: QuizStep21Props) {
             </label>
           </div>
 
-          <Button
-            onClick={onNext}
-            className="w-full max-w-md bg-green-500 hover:bg-green-600 text-white py-3 text-lg rounded-lg"
-          >
-            Continue
-          </Button>
+          <motion.div
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 1, duration: 0.6 }}
+                  className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-10"
+                >
+                  <Button
+                    onClick={onNext}
+                    className="bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white py-4 px-8 rounded-xl font-semibold text-lg shadow-xl hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
+                  >
+                    Continue →
+                  </Button>
+                </motion.div>
         </div>
       </div>
     </div>

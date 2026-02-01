@@ -13,29 +13,25 @@ interface QuizStep25Props {
 export default function QuizStep24({ onNext, onBack }: QuizStep25Props) {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
-      <div className="max-w-2xl w-full text-center space-y-8">
-        <h1 className="text-3xl font-bold text-gray-800">
-          Simply trying to quit
-          <br />
-          drinking will only leave
-          <br />
-          you frustrated
+      <div className="max-w-2xl w-full text-center space-y-4">
+        <h1 className="md:text-2xl text-3xl font-bold text-gray-800">
+          Simply trying to quit drinking will only leave you frustrated
         </h1>
 
-        <div className="relative">
+        <div className="relative mx-auto">
           <Image
             src="/leave-you-frustrated.png"
             alt="Before and after comparison showing frustrated person vs happy person"
-            width={600}
+            width={300}
             height={300}
-            className="w-full h-auto rounded-lg"
+            className=" h-auto rounded-lg mx-auto"
           />
         </div>
 
         <div className="space-y-4">
           <p className="text-lg text-gray-700">
             <strong>
-              Ultiself uses cutting edge training &<br />
+              Ultiself uses cutting edge training &
               neuroscience exercises, right in our app, to
               <br />
               empower you.

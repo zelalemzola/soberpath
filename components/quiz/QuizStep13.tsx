@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -70,11 +69,6 @@ export function QuizStep13({ onNext, updateData }: QuizStep17Props) {
             Terms of Use
           </a>
         </div>
-      </div>
-      <div className="fixed bottom-4 left-4">
-        <p className="text-xs text-gray-400">
-          © 2024, Ultiself. All rights reserved.
-        </p>
       </div>
     </div>
   );

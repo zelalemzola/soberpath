@@ -56,26 +56,7 @@ export function QuizStep17({ onNext, updateData }: QuizStep13Props) {
       </div>
 
       {/* Footer */}
-      <div className="fixed bottom-4 left-4 flex items-center space-x-2">
-        <div className="w-8 h-8 bg-orange-500 rounded-full flex items-center justify-center">
-          <span className="text-white font-bold text-sm">U</span>
-        </div>
-        <span className="text-sm font-medium text-gray-700">Ultiself</span>
-        <div className="flex space-x-4 ml-8">
-          <a href="#" className="text-xs text-gray-500 hover:text-gray-700">
-            Privacy Policy
-          </a>
-          <a href="#" className="text-xs text-gray-500 hover:text-gray-700">
-            Terms of Use
-          </a>
-        </div>
-      </div>
-      <div className="fixed bottom-4 left-4">
-        <p className="text-xs text-gray-400">
-          © 2024, Ultiself. All rights reserved.
-        </p>
-      </div>
+     
     </div>
   );
 }
-

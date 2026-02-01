@@ -68,6 +68,9 @@ export default function QuizPage() {
   const nextStep = () => {
     setCurrentStep((prev) => prev + 1);
   };
+  const nextStep4 = () => {
+    setCurrentStep((prev) => prev + 2);
+  };
 
   const renderStep = () => {
     switch (currentStep) {
@@ -84,9 +87,7 @@ export default function QuizPage() {
           />
         );
       case 4:
-        return <QuizStep4 onNext={nextStep} updateData={updateQuizData} />;
-      case 5:
-        return <QuizStep5 onNext={nextStep} updateData={updateQuizData} />;
+        return <QuizStep4 onNext={nextStep4} updateData={updateQuizData} />;
       case 6:
         return <QuizStep6 onNext={nextStep} updateData={updateQuizData} />;
       case 7:
@@ -179,7 +180,7 @@ export default function QuizPage() {
         return (
           <QuizStep35 onNext={nextStep} onBack={() => setCurrentStep(34)} />
         );
-    
+
       case 37:
         return (
           <QuizStep37 onNext={nextStep} onBack={() => setCurrentStep(35)} />

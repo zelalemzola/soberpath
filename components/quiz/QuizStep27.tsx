@@ -11,26 +11,22 @@ interface QuizStep22Props {
 export default function QuizStep27({ onNext, onBack }: QuizStep22Props) {
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
-      <div className="max-w-2xl w-full text-center space-y-8">
-        <h1 className="text-3xl font-bold text-gray-800">
-          Good news! based on our
-          <br />
-          analysis you can get
-          <br />
-          control of your drinking by
-          <br />
-          <span className="bg-green-500 text-white px-2 py-1 rounded">
+      <div className="max-w-2xl w-full text-center  flex flex-col items-center">
+        <h1 className="text-2xl font-bold text-gray-800">
+          Good news! based on our analysis you can get control of your drinking by
+         <br/>
+          <span className="bg-green-500 text-white px-2 py-1 rounded mt-10 text-sm  rounded-2xl">
             02/26/2026
           </span>
         </h1>
 
-        <div className="bg-white p-6 rounded-lg shadow-lg">
+        <div className="mx-auto flex items-center p-6 ">
           <Image
             src="/good-news-graph.png"
             alt="Progress graph showing improvement over 4 weeks"
-            width={500}
-            height={300}
-            className="w-full h-auto"
+            width={400}
+            height={100}
+            className=""
           />
         </div>
 
