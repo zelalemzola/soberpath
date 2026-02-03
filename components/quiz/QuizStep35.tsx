@@ -2,14 +2,20 @@
 
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import type { QuizData } from "@/app/quiz/page";
 
-interface QuizStep30Props {
+interface QuizStep35Props {
   onNext: () => void;
   onBack: () => void;
+  updateData?: (data: Partial<QuizData>) => void;
 }
 
-export default function QuizStep35({ onNext, onBack }: QuizStep30Props) {
+export default function QuizStep35({ onNext, updateData }: QuizStep35Props) {
   const [name, setName] = useState("");
+  const handleContinue = () => {
+    if (updateData && name.trim()) updateData({ userName: name.trim() });
+    onNext();
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
@@ -36,7 +42,7 @@ export default function QuizStep35({ onNext, onBack }: QuizStep30Props) {
           />
 
           <Button
-            onClick={onNext}
+            onClick={handleContinue}
             className="w-full max-w-md bg-green-500 hover:bg-green-600 text-white py-3 text-lg rounded-lg"
           >
             Continue

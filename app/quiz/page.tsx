@@ -37,6 +37,7 @@ import QuizStep33 from "@/components/quiz/QuizStep33";
 import QuizStep34 from "@/components/quiz/QuizStep34";
 import QuizStep35 from "@/components/quiz/QuizStep35";
 import QuizStep37 from "@/components/quiz/QuizStep37";
+import PricingStep from "@/components/quiz/PricingStep";
 
 export interface QuizData {
   mainReason?: string;
@@ -55,6 +56,8 @@ export interface QuizData {
   alcoholConfidence?: string;
   pastTrauma?: string;
   stressLevel?: string;
+  userName?: string;
+  userEmail?: string;
 }
 
 export default function QuizPage() {
@@ -178,12 +181,23 @@ export default function QuizPage() {
         );
       case 35:
         return (
-          <QuizStep35 onNext={nextStep} onBack={() => setCurrentStep(34)} />
+          <QuizStep35
+            onNext={() => setCurrentStep(37)}
+            onBack={() => setCurrentStep(34)}
+            updateData={updateQuizData}
+          />
         );
 
       case 37:
         return (
           <QuizStep37 onNext={nextStep} onBack={() => setCurrentStep(35)} />
+        );
+      case 38:
+        return (
+          <PricingStep
+            quizData={quizData}
+            onBack={() => setCurrentStep(37)}
+          />
         );
       default:
         return <QuizStep1 onNext={nextStep} updateData={updateQuizData} />;
