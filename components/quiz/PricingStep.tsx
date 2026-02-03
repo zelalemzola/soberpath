@@ -161,12 +161,12 @@ export default function PricingStep({ quizData, onBack }: PricingStepProps) {
             <div
               key={plan.id}
               className={`relative rounded-2xl border-2 bg-white p-6 shadow-sm transition-all hover:shadow-md ${
-                plan.popular
+                "popular" in plan && plan.popular
                   ? "border-green-500 ring-2 ring-green-500/20"
                   : "border-gray-200"
               }`}
             >
-              {plan.popular && (
+              {"popular" in plan && plan.popular && (
                 <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-full">
                   Most popular
                 </div>
@@ -192,7 +192,7 @@ export default function PricingStep({ quizData, onBack }: PricingStepProps) {
               <Button
                 onClick={() => handleSelectPlan(plan.id, plan.name, plan.price)}
                 className={`w-full rounded-xl py-3 font-semibold ${
-                  plan.popular
+                  "popular" in plan && plan.popular
                     ? "bg-green-600 hover:bg-green-700 text-white"
                     : "bg-gray-900 hover:bg-gray-800 text-white"
                 }`}
