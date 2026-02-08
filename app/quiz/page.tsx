@@ -177,7 +177,11 @@ export default function QuizPage() {
         );
       case 34:
         return (
-          <QuizStep34 onNext={nextStep} onBack={() => setCurrentStep(33)} />
+          <QuizStep34
+            onNext={nextStep}
+            onBack={() => setCurrentStep(33)}
+            updateData={updateQuizData}
+          />
         );
       case 35:
         return (

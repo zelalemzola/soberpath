@@ -3,9 +3,17 @@
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
-import { Check, Sparkles, Shield } from "lucide-react";
+import { Check, Sparkles, Shield, ArrowLeft } from "lucide-react";
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import type { QuizData } from "@/app/quiz/page";
 import { saveReportDraft } from "@/lib/report-utils";
+import convertToSubcurrency from "@/lib/convertToSubcurrency";
+import CheckoutPage from "@/components/payment/CheckoutPage";
+
+const stripePromise = loadStripe(
+  process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY!,
+);
 
 const PLANS = [
   {
@@ -47,19 +55,29 @@ const PLANS = [
   },
 ] as const;
 
+type SelectedPlan = { planId: string; planName: string; amount: number };
+
 interface PricingStepProps {
   quizData: QuizData;
   onBack: () => void;
 }
 
+const hasNameAndEmail = (data: QuizData) =>
+  Boolean(data.userName?.trim() && data.userEmail?.trim());
+
 export default function PricingStep({ quizData, onBack }: PricingStepProps) {
   const [name, setName] = useState(quizData.userName ?? "");
   const [email, setEmail] = useState(quizData.userEmail ?? "");
   const [error, setError] = useState("");
+  const [selectedPlan, setSelectedPlan] = useState<SelectedPlan | null>(null);
+
+  const displayName = quizData.userName?.trim() || name.trim();
+  const displayEmail = quizData.userEmail?.trim() || email.trim();
+  const showDetailsForm = !hasNameAndEmail(quizData);
 
   const handleSelectPlan = (planId: string, planName: string, amount: number) => {
-    const trimmedName = name.trim();
-    const trimmedEmail = email.trim();
+    const trimmedName = (quizData.userName ?? name).trim();
+    const trimmedEmail = (quizData.userEmail ?? email).trim();
     if (!trimmedName) {
       setError("Please enter your name.");
       return;
@@ -78,12 +96,10 @@ export default function PricingStep({ quizData, onBack }: PricingStepProps) {
       amount: String(amount),
     });
 
-    const params = new URLSearchParams({
-      plan: planName,
-      amount: String(amount),
-    });
-    window.location.href = `/payment?${params.toString()}`;
+    setSelectedPlan({ planId, planName, amount });
   };
+
+  const handleChangePlan = () => setSelectedPlan(null);
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -109,46 +125,65 @@ export default function PricingStep({ quizData, onBack }: PricingStepProps) {
           </p>
         </motion.div>
 
-        {/* Name & Email */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.05 }}
-          className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-8 max-w-xl mx-auto"
-        >
-          <h2 className="text-lg font-semibold text-gray-900 mb-4">
-            Your details
-          </h2>
-          <div className="space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Name
-              </label>
-              <input
-                type="text"
-                placeholder="Enter your name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
-              />
+        {/* Name & Email - only when not already collected in quiz */}
+        {showDetailsForm && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.05 }}
+            className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-8 max-w-xl mx-auto"
+          >
+            <h2 className="text-lg font-semibold text-gray-900 mb-4">
+              Your details
+            </h2>
+            <div className="space-y-4">
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Name
+                </label>
+                <input
+                  type="text"
+                  placeholder="Enter your name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Email
+                </label>
+                <input
+                  type="email"
+                  placeholder="Enter your email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
+                />
+              </div>
             </div>
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-1">
-                Email
-              </label>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                className="w-full px-4 py-3 rounded-xl border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none transition"
-              />
-            </div>
-          </div>
-          {error && (
-            <p className="mt-2 text-sm text-red-600">{error}</p>
-          )}
-        </motion.div>
+            {error && (
+              <p className="mt-2 text-sm text-red-600">{error}</p>
+            )}
+          </motion.div>
+        )}
+
+        {/* Show saved details when we have them from quiz (no form) */}
+        {!showDetailsForm && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.05 }}
+            className="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 mb-8 max-w-xl mx-auto"
+          >
+            <h2 className="text-lg font-semibold text-gray-900 mb-2">
+              Your details
+            </h2>
+            <p className="text-gray-600 text-sm">
+              {displayName} · {displayEmail}
+            </p>
+          </motion.div>
+        )}
 
         {/* Plan cards */}
         <motion.div
@@ -191,17 +226,68 @@ export default function PricingStep({ quizData, onBack }: PricingStepProps) {
               </ul>
               <Button
                 onClick={() => handleSelectPlan(plan.id, plan.name, plan.price)}
+                disabled={!!selectedPlan && selectedPlan.planId !== plan.id}
                 className={`w-full rounded-xl py-3 font-semibold ${
+                  selectedPlan?.planId === plan.id
+                    ? "ring-2 ring-green-500 ring-offset-2 "
+                    : ""
+                }${
                   "popular" in plan && plan.popular
                     ? "bg-green-600 hover:bg-green-700 text-white"
                     : "bg-gray-900 hover:bg-gray-800 text-white"
                 }`}
               >
-                Get this plan — ${plan.price}
+                {selectedPlan?.planId === plan.id
+                  ? "Selected — Complete payment below"
+                  : `Get this plan — $${plan.price}`}
               </Button>
             </div>
           ))}
         </motion.div>
+
+        {/* Inline payment form when a plan is selected */}
+        {selectedPlan && (
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.05 }}
+            className="bg-white rounded-2xl border-2 border-green-200 shadow-sm p-6 mb-8 max-w-xl mx-auto"
+          >
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h2 className="text-lg font-semibold text-gray-900">
+                  Complete your purchase
+                </h2>
+                <p className="text-gray-600 text-sm mt-0.5">
+                  <span className="font-medium text-green-600">{selectedPlan.planName}</span>
+                  {" "}— ${selectedPlan.amount.toFixed(2)} one-time
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={handleChangePlan}
+                className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700"
+              >
+                <ArrowLeft className="h-4 w-4" />
+                Change plan
+              </button>
+            </div>
+            <Elements
+              key={selectedPlan.amount}
+              stripe={stripePromise}
+              options={{
+                mode: "payment",
+                amount: convertToSubcurrency(selectedPlan.amount),
+                currency: "usd",
+              }}
+            >
+              <CheckoutPage
+                amount={selectedPlan.amount}
+                plan={selectedPlan.planName}
+              />
+            </Elements>
+          </motion.div>
+        )}
 
         <div className="flex items-center justify-center gap-2 text-gray-500 text-sm">
           <Shield className="h-4 w-4" />

@@ -3,14 +3,21 @@
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import Image from "next/image";
+import type { QuizData } from "@/app/quiz/page";
 
-interface QuizStep31Props {
+interface QuizStep34Props {
   onNext: () => void;
   onBack: () => void;
+  updateData?: (data: Partial<QuizData>) => void;
 }
 
-export default function QuizStep34({ onNext, onBack }: QuizStep31Props) {
+export default function QuizStep34({ onNext, onBack, updateData }: QuizStep34Props) {
   const [email, setEmail] = useState("");
+
+  const handleContinue = () => {
+    if (updateData && email.trim()) updateData({ userEmail: email.trim() });
+    onNext();
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-6">
@@ -47,7 +54,7 @@ export default function QuizStep34({ onNext, onBack }: QuizStep31Props) {
           </div>
 
           <Button
-            onClick={onNext}
+            onClick={handleContinue}
             className="w-full max-w-md bg-green-500 hover:bg-green-600 text-white py-3 text-lg rounded-lg"
           >
             Continue
